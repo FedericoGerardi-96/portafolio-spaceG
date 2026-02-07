@@ -1,0 +1,22 @@
+---
+import "@/styles/global.css";
+
+import Layout from '@/layouts/Layout.astro';
+import ContactSection from '@/components/ContactSection.astro';
+import HeroSection from '@/components/HeroSection.astro';
+import AboutSection from '@/components/AboutSection.astro';
+import SpaceScene from '@/components/Space-scene.tsx';
+import Navigation from '@/components/Navigation.tsx';
+import ProjectsSection from '@/components/ProjectsSection.astro';
+---
+
+<Layout>
+	<SpaceScene client:visible/>
+	<Navigation client:load />
+	<main>
+		<HeroSection />
+		<AboutSection />
+		<ProjectsSection />
+		<ContactSection />
+	</main>
+</Layout>

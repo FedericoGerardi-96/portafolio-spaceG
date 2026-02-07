@@ -1,0 +1,92 @@
+---
+const projects = [
+  {
+    id: 1,
+    title: "Nova Commerce",
+    category: "E-commerce",
+    description: "Plataforma de e-commerce moderna con experiencia inmersiva, animaciones fluidas y un sistema de pago integrado.",
+    tech: ["Next.js", "TypeScript", "Stripe", "Prisma"],
+    color: "from-primary/20 to-primary/5",
+    link: "#",
+  },
+  {
+    id: 2,
+    title: "Orbit Dashboard",
+    category: "Web App",
+    description: "Panel de administración con visualizaciones de datos en tiempo real, gestión de usuarios y analytics avanzado.",
+    tech: ["React", "D3.js", "Node.js", "PostgreSQL"],
+    color: "from-accent/20 to-accent/5",
+    link: "#",
+  },
+  // ... (puedes añadir los otros aquí)
+];
+---
+
+<section id="projects" class="relative bg-background/60 px-6 py-32 backdrop-blur-sm">
+  <div class="mx-auto max-w-6xl">
+    <div data-animate class="mb-16 opacity-0" style="animation-delay: 0.1s">
+      <span class="mb-4 inline-block font-mono text-sm text-primary">// Proyectos</span>
+      <h2 class="text-balance text-3xl font-bold text-foreground sm:text-4xl">Trabajos seleccionados</h2>
+      <p class="mt-4 max-w-xl text-pretty text-muted-foreground">
+        Cada proyecto es una oportunidad para explorar nuevas fronteras en diseño y tecnología.
+      </p>
+    </div>
+
+    <div class="grid gap-8 md:grid-cols-2">
+      {projects.map((project, i) => (
+        <div 
+          data-animate 
+          class="project-card group relative opacity-0" 
+          style={`animation-delay: ${0.2 + i * 0.15}s`}
+        >
+          <div class="relative overflow-hidden rounded-2xl border border-border bg-card/40 backdrop-blur-sm transition-all duration-500 group-hover:border-primary/40 group-hover:shadow-lg group-hover:shadow-primary/5">
+            
+            <div class={`relative h-56 bg-gradient-to-br ${project.color} overflow-hidden`}>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="text-6xl font-bold text-foreground/5">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+              </div>
+
+              <div class="absolute inset-0 bg-primary/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+              <div class="absolute left-4 top-4">
+                <span class="rounded-full border border-foreground/10 bg-background/60 px-3 py-1 font-mono text-xs text-foreground/80 backdrop-blur-sm">
+                  {project.category}
+                </span>
+              </div>
+
+              <div class="absolute right-4 top-4 -translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                <a 
+                  href={project.link} 
+                  class="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform hover:scale-110"
+                >
+                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <div class="p-6">
+              <h3 class="mb-2 text-xl font-semibold text-foreground transition-colors group-hover:text-primary">
+                {project.title}
+              </h3>
+              <p class="mb-4 text-sm leading-relaxed text-muted-foreground">
+                {project.description}
+              </p>
+
+              <div class="flex flex-wrap gap-2">
+                {project.tech.map((t) => (
+                  <span class="rounded-md bg-secondary px-2.5 py-1 font-mono text-xs text-secondary-foreground">
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
