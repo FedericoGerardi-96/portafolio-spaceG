@@ -8,6 +8,13 @@ import AboutSection from '@/components/AboutSection.astro';
 import SpaceScene from '@/components/Space-scene.tsx';
 import Navigation from '@/components/Navigation.tsx';
 import ProjectsSection from '@/components/ProjectsSection.astro';
+
+import { getContentfulData } from '@/lib/contentful';
+
+const data = await getContentfulData();
+const experiencias = data.items.flatMap(item => item.fields.experiencia)
+const stackTecnologico = data.items.flatMap(item => item.fields.stackTecnologico).findLast(item => item.stack)
+const proyectos = data.items.flatMap(item => item.fields.proyectos).flatMap(p => p.proyectos);
 ---
 
 <Layout>
@@ -15,8 +22,8 @@ import ProjectsSection from '@/components/ProjectsSection.astro';
 	<Navigation client:load />
 	<main>
 		<HeroSection />
-		<AboutSection />
-		<ProjectsSection />
+		<AboutSection experiencias={experiencias} stackTecnologico={stackTecnologico} />
+		<ProjectsSection proyectos={proyectos} />
 		<ContactSection />
 	</main>
 </Layout>

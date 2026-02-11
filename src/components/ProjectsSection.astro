@@ -1,88 +1,100 @@
 ---
-const projects = [
-  {
-    id: 1,
-    title: "Nova Commerce",
-    category: "E-commerce",
-    description: "Plataforma de e-commerce moderna con experiencia inmersiva, animaciones fluidas y un sistema de pago integrado.",
-    tech: ["Next.js", "TypeScript", "Stripe", "Prisma"],
-    color: "from-primary/20 to-primary/5",
-    link: "#",
-  },
-  {
-    id: 2,
-    title: "Orbit Dashboard",
-    category: "Web App",
-    description: "Panel de administración con visualizaciones de datos en tiempo real, gestión de usuarios y analytics avanzado.",
-    tech: ["React", "D3.js", "Node.js", "PostgreSQL"],
-    color: "from-accent/20 to-accent/5",
-    link: "#",
-  },
-  // ... (puedes añadir los otros aquí)
-];
+// Importamos el componente de imagen nativo de Astro para optimizar tus capturas de Cloudinary
+import type { Proyecto } from '@/interface/contentfull.interface';
+import { Image } from 'astro:assets';
+
+interface Props {
+  proyectos: Proyecto[];
+}
+
+const { proyectos } = Astro.props;
+
+const [featured, ...rest] = proyectos;
 ---
 
 <section id="projects" class="relative bg-background/60 px-6 py-32 backdrop-blur-sm">
   <div class="mx-auto max-w-6xl">
+    {/* Header */}
     <div data-animate class="mb-16 opacity-0" style="animation-delay: 0.1s">
-      <span class="mb-4 inline-block font-mono text-sm text-primary">// Proyectos</span>
+      <span class="mb-4 inline-block font-mono text-sm text-primary">{"// Proyectos"}</span>
       <h2 class="text-balance text-3xl font-bold text-foreground sm:text-4xl">Trabajos seleccionados</h2>
       <p class="mt-4 max-w-xl text-pretty text-muted-foreground">
-        Cada proyecto es una oportunidad para explorar nuevas fronteras en diseño y tecnología.
+        Cada proyecto es una oportunidad para explorar nuevas ideas y tecnologías.
       </p>
     </div>
 
-    <div class="grid gap-8 md:grid-cols-2">
-      {projects.map((project, i) => (
-        <div 
-          data-animate 
-          class="project-card group relative opacity-0" 
-          style={`animation-delay: ${0.2 + i * 0.15}s`}
-        >
-          <div class="relative overflow-hidden rounded-2xl border border-border bg-card/40 backdrop-blur-sm transition-all duration-500 group-hover:border-primary/40 group-hover:shadow-lg group-hover:shadow-primary/5">
-            
-            <div class={`relative h-56 bg-gradient-to-br ${project.color} overflow-hidden`}>
-              <div class="absolute inset-0 flex items-center justify-center">
-                <span class="text-6xl font-bold text-foreground/5">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-              </div>
-
-              <div class="absolute inset-0 bg-primary/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
+    {/* Featured Project (01) */}
+    <div class="mb-8">
+      <div data-animate class="group relative opacity-0" style="animation-delay: 0.2s">
+        <div class="relative overflow-hidden rounded-2xl border border-border bg-card/40 backdrop-blur-sm transition-all duration-500 group-hover:border-primary/50 group-hover:shadow-xl group-hover:shadow-primary/10">
+          <div class="grid md:grid-cols-2">
+            <div class="relative aspect-video md:aspect-auto md:min-h-[320px] overflow-hidden">
+              <Image 
+                src={featured.imagen} 
+                alt={featured.titulo}
+                width={1200}
+                height={675}
+                class="absolute inset-0 h-full w-full object-cover transition-all duration-700 group-hover:scale-105"
+              />
+              <div class="absolute inset-0 bg-gradient-to-r from-transparent to-background/90 transition-opacity duration-500 max-md:bg-gradient-to-t max-md:from-transparent max-md:to-background/80 opacity-70 group-hover:opacity-90"></div>
               <div class="absolute left-4 top-4">
-                <span class="rounded-full border border-foreground/10 bg-background/60 px-3 py-1 font-mono text-xs text-foreground/80 backdrop-blur-sm">
-                  {project.category}
-                </span>
+                <span class="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 font-mono text-xs text-primary backdrop-blur-sm">Destacado</span>
               </div>
-
-              <div class="absolute right-4 top-4 -translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                <a 
-                  href={project.link} 
-                  class="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform hover:scale-110"
-                >
-                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10" />
-                  </svg>
+            </div>
+            <div class="flex flex-col justify-center p-8">
+              <span class="mb-2 font-mono text-xs text-primary/70">01</span>
+              <h3 class="text-2xl font-bold transition-colors duration-300 group-hover:text-primary">{featured.titulo}</h3>
+              <p class="mt-3 text-sm leading-relaxed text-muted-foreground">{featured.descripcion}</p>
+              <div class="mt-5 flex flex-wrap gap-2">
+                {featured.tecnologias.split(",").map((t) => (
+                  <span class="rounded-full bg-secondary px-3 py-1 font-mono text-xs text-secondary-foreground transition-colors group-hover:bg-primary/15 group-hover:text-primary">{t}</span>
+                ))}
+              </div>
+              <div class="mt-6 flex gap-3">
+                <a href={featured.link} target="_blank" class="flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-transform hover:scale-105">
+                  Ver Demo <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                </a>
+                <a href={featured.github} target="_blank" class="flex items-center gap-2 rounded-full border border-border px-5 py-2 text-sm text-muted-foreground transition-colors hover:border-foreground/40 hover:text-foreground">
+                  <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                  Código
                 </a>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            <div class="p-6">
-              <h3 class="mb-2 text-xl font-semibold text-foreground transition-colors group-hover:text-primary">
-                {project.title}
-              </h3>
-              <p class="mb-4 text-sm leading-relaxed text-muted-foreground">
-                {project.description}
-              </p>
-
-              <div class="flex flex-wrap gap-2">
-                {project.tech.map((t) => (
-                  <span class="rounded-md bg-secondary px-2.5 py-1 font-mono text-xs text-secondary-foreground">
-                    {t}
-                  </span>
-                ))}
+    {/* Project Grid */}
+    <div class="grid gap-6 sm:grid-cols-2">
+      {rest.map((project, i) => (
+        <div data-animate class="group relative opacity-0" style={`animation-delay: ${0.3 + i * 0.1}s`}>
+          <div class="relative overflow-hidden rounded-2xl border border-border bg-card/40 backdrop-blur-sm transition-all duration-500 group-hover:border-primary/50 group-hover:shadow-xl group-hover:shadow-primary/10">
+            <div class="relative aspect-video overflow-hidden">
+              <Image 
+                src={project.imagen} 
+                alt={project.titulo} 
+                width={800}
+                height={450}
+                class="h-full w-full object-cover transition-all duration-700 group-hover:scale-105" 
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent transition-opacity duration-500 opacity-60 group-hover:opacity-80"></div>
+              
+              {/* Action buttons (Solo aparecen en hover con CSS puro) */}
+              <div class="absolute right-4 top-4 flex gap-2 transition-all duration-300 -translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
+                <a href={project.link} target="_blank" class="flex h-9 w-9 items-center justify-center rounded-full border border-foreground/10 bg-background/70 text-foreground backdrop-blur-md hover:bg-primary hover:text-primary-foreground"><svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+                <a href={project.github} target="_blank" class="flex h-9 w-9 items-center justify-center rounded-full border border-foreground/10 bg-background/70 text-foreground backdrop-blur-md hover:bg-foreground hover:text-background"><svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
               </div>
+
+              <div class="absolute bottom-0 left-0 right-0 p-5">
+                <h3 class="text-lg font-semibold transition-colors duration-300 group-hover:text-primary">{project.titulo}</h3>
+                <p class="mt-1 text-sm leading-relaxed text-muted-foreground line-clamp-2">{project.descripcion}</p>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5 border-t border-border/50 px-5 py-3.5">
+              {project.tecnologias.split(",").map((t) => (
+                <span class="rounded-full px-2.5 py-0.5 font-mono text-[11px] bg-secondary text-secondary-foreground transition-colors group-hover:bg-primary/15 group-hover:text-primary">{t}</span>
+              ))}
             </div>
           </div>
         </div>
@@ -90,3 +102,17 @@ const projects = [
     </div>
   </div>
 </section>
+
+<script>
+  // Script de revelado al hacer scroll (Recomendado mover a un archivo global)
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("animate-slide-up");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  document.querySelectorAll("[data-animate]").forEach((el) => observer.observe(el));
+</script>

@@ -1,0 +1,160 @@
+---
+const { experiencias: rawExperiencias = [] } = Astro.props;
+
+// Normalizamos la data: si viene envuelta en un objeto con propiedad 'experiencia', la aplanamos.
+const experiencias = Array.isArray(rawExperiencias)
+  ? rawExperiencias.flatMap((item: any) => (item.experiencia ? item.experiencia : item))
+  : [];
+---
+
+<div class='relative experience-container'>
+  <div class='absolute left-[11px] top-2 bottom-2 w-px bg-white/10'></div>
+  <div class='absolute left-[9px] top-2 bottom-2 w-[5px] rounded-full bg-primary/10 blur-[2px]'></div>
+
+  <div class="flex flex-col gap-0">
+    {experiencias.map((exp: any, index: number) => (
+      <button
+        type="button"
+        class="experience-item group relative flex items-start gap-4 py-5 text-left transition-all duration-300 first:pt-0 last:pb-0 w-full"
+        data-index={index}
+      >
+        <div class="relative z-10 mt-1.5 flex-shrink-0">
+          <div class="node-dot relative h-[23px] w-[23px] rounded-full border-2 border-white/20 bg-background transition-all duration-300 group-hover:border-primary/60 group-hover:bg-primary/10">
+            <div class="absolute inset-0 m-auto h-2 w-2 rounded-full bg-white/40 group-hover:bg-primary/60"></div>
+          </div>
+        </div>
+
+        <div class="flex-1 rounded-xl border border-transparent px-4 py-3.5 transition-all duration-300 group-hover:border-white/10 group-hover:bg-white/[0.03]">
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <h4 class="text-sm font-semibold text-white/70 group-hover:text-white transition-colors">
+              {exp.empresa}
+            </h4>
+            <span class="font-mono text-xs text-primary/80">
+              {exp.periodo}
+            </span>
+          </div>
+          <p class="mt-0.5 text-xs text-white/40 group-hover:text-white/60">
+            {exp.puesto}
+          </p>
+          <div class="mt-2 flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-widest text-primary/0 transition-all duration-300 group-hover:text-primary/70">
+            Ver detalle →
+          </div>
+        </div>
+      </button>
+    ))}
+  </div>
+</div>
+
+<div id="experience-drawer" class="fixed inset-0 z-[100] invisible outline-none" aria-modal="true" role="dialog">
+  <div id="drawer-overlay" class="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+  
+  <div id="drawer-panel" class="absolute right-0 top-0 h-full w-full max-w-md translate-x-full bg-[#0a0a0b] border-l border-white/10 p-8 transition-transform duration-300 ease-in-out shadow-2xl overflow-y-auto">
+    <button id="close-drawer" class="absolute right-6 top-6 text-white/50 hover:text-white transition-colors">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+
+    <div id="drawer-content" class="mt-8 flex flex-col gap-6">
+    </div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ experiencias }}>
+  const drawer = document.getElementById('experience-drawer');
+  const overlay = document.getElementById('drawer-overlay');
+  const panel = document.getElementById('drawer-panel');
+  const content = document.getElementById('drawer-content');
+  const closeBtn = document.getElementById('close-drawer');
+  const buttons = document.querySelectorAll('.experience-item');
+
+  // Mueve el drawer al final del body para que 'fixed' sea relativo a la ventana
+  if (drawer && drawer.parentNode !== document.body) {
+    document.body.appendChild(drawer);
+  }
+
+  function openDrawer(data) {
+    if (!data) return;
+
+    // Inyectar contenido
+    content.innerHTML = `
+      <div class="space-y-6">
+        <div>
+          <h2 class="text-2xl font-bold text-white">${data.empresa || ''}</h2>
+          <p class="text-primary/80 font-mono text-sm">${data.periodo || ''}</p>
+          <p class="text-white/60 mt-1">${data.puesto || ''}</p>
+        </div>
+
+        <div class="p-4 rounded-lg bg-white/5 border border-white/10">
+          <h3 class="text-xs font-mono uppercase text-white/40 mb-3 tracking-widest">Descripción</h3>
+          <p class="text-sm text-white/80 leading-relaxed">${data.descripcion || ''}</p>
+        </div>
+
+        ${data.logros && data.logros.length > 0 ? `
+          <div>
+            <h3 class="text-xs font-mono uppercase text-white/40 mb-3 tracking-widest">Logros Clave</h3>
+            <ul class="space-y-3">
+              ${data.logros.map(logro => `
+                <li class="flex gap-3 text-sm text-white/70">
+                  <span class="h-1.5 w-1.5 rounded-full bg-primary mt-1.5 shrink-0"></span>
+                  ${logro}
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        ` : ''}
+
+        ${data.tecnologias && data.tecnologias.length > 0 ? `
+          <div>
+            <h3 class="text-xs font-mono uppercase text-white/40 mb-3 tracking-widest">Tecnologías</h3>
+            <div class="flex flex-wrap gap-2">
+              ${data.tecnologias.map(tech => `
+                <span class="px-2 py-1 text-[10px] font-mono border border-primary/30 bg-primary/10 text-primary rounded">
+                  ${tech}
+                </span>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+      </div>
+    `;
+
+    // Mostrar Drawer
+    drawer.classList.remove('invisible');
+    setTimeout(() => {
+      overlay.classList.add('opacity-100');
+      panel.classList.remove('translate-x-full');
+    }, 10);
+  }
+
+  function closeDrawer() {
+    overlay.classList.remove('opacity-100');
+    panel.classList.add('translate-x-full');
+    setTimeout(() => {
+        drawer.classList.add('invisible');
+    }, 300);
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const index = btn.getAttribute('data-index');
+      const data = experiencias[index];
+      openDrawer(data);
+    });
+  });
+
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+  if (overlay) overlay.addEventListener('click', closeDrawer);
+
+  // Cerrar con Escape
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !drawer.classList.contains('invisible')) {
+      closeDrawer();
+    }
+  });
+</script>
+
+<style>
+  /* Animación de pulso para el nodo activo o hover */
+  .experience-item:hover .node-dot {
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+  }
+</style>
