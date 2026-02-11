@@ -141,73 +141,74 @@ export default function TechStack({ stackTecnologico }: TechStackProps) {
   const [activeTab, setActiveTab] = useState<StackCategory>('frontend');
 
   return (
-    <div>
+ <div>
       {/* Tabs */}
-      <div className='mb-6 flex gap-1 rounded-xl border border-border bg-card/30 p-1'>
+      <div className="mb-6 flex gap-1 rounded-xl border border-border bg-card/30 p-1">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2.5 font-mono text-xs transition-all duration-300 ${
-              activeTab === tab.id ? 'bg-primary/10 text-primary shadow-sm shadow-primary/10' : 'text-muted-foreground hover:text-foreground'
-            }`}>
+              activeTab === tab.id
+                ? "bg-primary/10 text-primary shadow-sm shadow-primary/10"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
             {tab.icon}
-            <span className='hidden sm:inline'>{tab.label}</span>
+            <span className="hidden sm:inline">{tab.label}</span>
           </button>
         ))}
       </div>
 
       {/* Content */}
-      <div className='min-h-[280px]'>
+      <div className="min-h-[280px]">
         {/* Frontend */}
-        {activeTab === 'frontend' && (
-          <div className='grid gap-3 sm:grid-cols-2'>
+        {activeTab === "frontend" && (
+          <div className="grid gap-3 sm:grid-cols-2">
             {stackTecnologico?.stack.frontend.map((skill, i) => (
               <div
                 key={skill.name}
-                className='group flex items-center justify-between rounded-xl border border-border bg-card/40 px-4 py-3.5 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:bg-card/70'
-                style={{ animationDelay: `${i * 0.05}s` }}>
-                <div className='flex flex-col gap-1'>
-                  <span className='text-sm font-medium text-foreground'>{skill.name}</span>
-                  {/* Level bar */}
-                  <div className='flex items-center gap-2'>
-                    <div className='h-1 w-16 overflow-hidden rounded-full bg-border'>
-                      <div
-                        className={`h-full rounded-full transition-all duration-700 ${
-                          skill.level === 'Avanzado' ? 'w-[90%] bg-primary' : 'w-[72%] bg-accent'
-                        }`}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <span className={`rounded-md border px-2 py-0.5 font-mono text-[10px] ${getLevelColor(skill.level)}`}>{skill.level}</span>
+                className="group flex items-center gap-3 rounded-xl border border-border bg-card/40 px-4 py-3.5 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:bg-card/70"
+                style={{ animationDelay: `${i * 0.05}s` }}
+              >
+                <div className="h-2 w-2 rounded-full bg-primary transition-shadow duration-300 group-hover:shadow-[0_0_8px_hsl(var(--primary))]" />
+                <span className="text-sm font-medium text-foreground">
+                  {skill.name}
+                </span>
               </div>
             ))}
           </div>
         )}
 
         {/* Backend & Tools */}
-        {activeTab === 'backend' && (
-          <div className='grid gap-3 sm:grid-cols-2'>
+        {activeTab === "backend" && (
+          <div className="grid gap-3 sm:grid-cols-2">
             {stackTecnologico?.stack.backend_and_tools.map((item, i) => (
               <div
                 key={item.name}
-                className='group flex items-center gap-3 rounded-xl border border-border bg-card/40 px-4 py-3.5 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:bg-card/70'
-                style={{ animationDelay: `${i * 0.05}s` }}>
-                <div className={`${getTypeColor(item.type)}`}>{getTypeIcon(item.type)}</div>
-                <div className='flex flex-1 flex-col'>
-                  <span className='text-sm font-medium text-foreground'>{item.name}</span>
-                  <span className={`font-mono text-[10px] ${getTypeColor(item.type)}`}>{item.type}</span>
+                className="group flex items-center gap-3 rounded-xl border border-border bg-card/40 px-4 py-3.5 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:bg-card/70"
+                style={{ animationDelay: `${i * 0.05}s` }}
+              >
+                <div className={`${getTypeColor(item.type)}`}>
+                  {getTypeIcon(item.type)}
+                </div>
+                <div className="flex flex-1 flex-col">
+                  <span className="text-sm font-medium text-foreground">
+                    {item.name}
+                  </span>
+                  <span className={`font-mono text-[10px] ${getTypeColor(item.type)}`}>
+                    {item.type}
+                  </span>
                 </div>
                 <div
                   className={`h-2 w-2 rounded-full ${
-                    item.type === 'Backend'
-                      ? 'bg-primary'
-                      : item.type === 'Database'
-                        ? 'bg-emerald-400'
-                        : item.type === 'Testing'
-                          ? 'bg-amber-400'
-                          : 'bg-muted-foreground'
+                    item.type === "Backend"
+                      ? "bg-primary"
+                      : item.type === "Database"
+                        ? "bg-emerald-400"
+                        : item.type === "Testing"
+                          ? "bg-amber-400"
+                          : "bg-muted-foreground"
                   }`}
                 />
               </div>
@@ -216,29 +217,33 @@ export default function TechStack({ stackTecnologico }: TechStackProps) {
         )}
 
         {/* Metodologias */}
-        {activeTab === 'metodologias' && (
-          <div className='flex flex-col gap-3'>
+        {activeTab === "metodologias" && (
+          <div className="flex flex-col gap-3">
             {stackTecnologico?.stack.metodologias.map((item, i) => (
               <div
                 key={item}
-                className='group flex items-center gap-4 rounded-xl border border-border bg-card/40 px-5 py-4 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:bg-card/70'
-                style={{ animationDelay: `${i * 0.05}s` }}>
-                <div className='flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 font-mono text-xs font-bold text-primary'>
-                  {String(i + 1).padStart(2, '0')}
+                className="group flex items-center gap-4 rounded-xl border border-border bg-card/40 px-5 py-4 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:bg-card/70"
+                style={{ animationDelay: `${i * 0.05}s` }}
+              >
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 font-mono text-xs font-bold text-primary">
+                  {String(i + 1).padStart(2, "0")}
                 </div>
-                <span className='text-sm font-medium text-foreground'>{item}</span>
-                <div className='ml-auto h-px flex-1 bg-gradient-to-r from-border to-transparent' />
+                <span className="text-sm font-medium text-foreground">
+                  {item}
+                </span>
+                <div className="ml-auto h-px flex-1 bg-gradient-to-r from-border to-transparent" />
                 <svg
-                  width='16'
-                  height='16'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                  stroke='currentColor'
-                  strokeWidth='2'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  className='text-primary/40 transition-colors group-hover:text-primary'>
-                  <polyline points='9 18 15 12 9 6' />
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-primary/40 transition-colors group-hover:text-primary"
+                >
+                  <polyline points="9 18 15 12 9 6" />
                 </svg>
               </div>
             ))}
