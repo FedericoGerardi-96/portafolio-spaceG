@@ -232,19 +232,6 @@ export default function TechStack({ stackTecnologico }: TechStackProps) {
                   {item}
                 </span>
                 <div className="ml-auto h-px flex-1 bg-gradient-to-r from-border to-transparent" />
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-primary/40 transition-colors group-hover:text-primary"
-                >
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
               </div>
             ))}
           </div>

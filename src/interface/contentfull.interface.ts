@@ -23,12 +23,17 @@ export interface Proyectos {
 }
 
 export interface Proyecto {
+  id: string;
   titulo: string;
-  descripcion: string;
+  cliente: string;
+  problema: string;
+  solucion: string;
+  rol: string;
+  tecnologias: string[];
+  destacado: boolean;
   imagen: string;
-  tecnologias: string;
-  link: string;
   github: string;
+  link: string;
 }
 
 export interface StackTecnologico {
