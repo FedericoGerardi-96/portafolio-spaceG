@@ -1,7 +1,7 @@
 "use client"
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber"
-import { Stars, Float, Environment, Text } from "@react-three/drei"
+import { Stars, Float, Environment, Text, Loader } from "@react-three/drei"
 import { useRef, useMemo, Suspense } from "react"
 import * as THREE from "three"
 
@@ -183,53 +183,88 @@ function CameraRig() {
 
 export default function SpaceScene() {
   return (
-    <div className="fixed inset-0 -z-10 pointer-events-none">
-      <Canvas
-        camera={{ position: [0, 0, 8], fov: 60 }}
-        gl={{ antialias: true, alpha: true }}
-        dpr={[1, 2]}
-      >
-        <Suspense fallback={null}>
-          <color attach="background" args={["#050a14"]} />
+    <>
+      <div className="fixed inset-0 -z-10 pointer-events-none">
+        <Canvas
+          camera={{ position: [0, 0, 8], fov: 60 }}
+          gl={{ antialias: true, alpha: true }}
+          dpr={[1, 2]}
+        >
+          <Suspense fallback={null}>
+            <color attach="background" args={["#050a14"]} />
 
-          {/* Lighting */}
-          <ambientLight intensity={0.15} />
-          <pointLight position={[10, 10, 10]} intensity={1} color="#06b6d4" />
-          <pointLight position={[-10, -5, -10]} intensity={0.5} color="#8b5cf6" />
-          <spotLight
-            position={[5, 5, 5]}
-            angle={0.3}
-            penumbra={1}
-            intensity={0.8}
-            color="#0ea5e9"
-          />
+            {/* Lighting */}
+            <ambientLight intensity={0.15} />
+            <pointLight position={[10, 10, 10]} intensity={1} color="#06b6d4" />
+            <pointLight position={[-10, -5, -10]} intensity={0.5} color="#8b5cf6" />
+            <spotLight
+              position={[5, 5, 5]}
+              angle={0.3}
+              penumbra={1}
+              intensity={0.8}
+              color="#0ea5e9"
+            />
 
-          {/* Stars background */}
-          <Stars
-            radius={100}
-            depth={80}
-            count={6000}
-            factor={4}
-            saturation={0}
-            fade
-            speed={0.5}
-          />
+            {/* Stars background */}
+            <Stars
+              radius={100}
+              depth={80}
+              count={6000}
+              factor={4}
+              saturation={0}
+              fade
+              speed={0.5}
+            />
 
-          {/* Main planet */}
-          <Planet />
+            {/* Main planet */}
+            <Planet />
 
-          {/* Orbiting moons */}
-          <OrbitingMoons />
+            {/* Orbiting moons */}
+            <OrbitingMoons />
 
-          {/* Floating particles */}
-          <FloatingParticles />
+            {/* Floating particles */}
+            <FloatingParticles />
 
-          {/* Camera animation */}
-          <CameraRig />
+            {/* Camera animation */}
+            <CameraRig />
 
-          <Environment preset="night" />
-        </Suspense>
-      </Canvas>
-    </div>
+            <Environment preset="night" />
+          </Suspense>
+        </Canvas>
+      </div>
+      <Loader
+        containerStyles={{
+          background: '#050a14',
+          zIndex: 9999,
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        innerStyles={{
+          width: '200px',
+          background: '#0f172a',
+          borderRadius: '4px',
+          overflow: 'hidden',
+          marginBottom: '10px'
+        }}
+        barStyles={{
+          background: '#06b6d4',
+          height: '6px'
+        }}
+        dataStyles={{
+          color: '#06b6d4',
+          fontSize: '18px',
+          fontFamily: 'monospace',
+          marginTop: '10px'
+        }}
+        dataInterpolation={(p) => `Cargando Universo... ${p.toFixed(0)}%`}
+      />
+    </>
   )
 }

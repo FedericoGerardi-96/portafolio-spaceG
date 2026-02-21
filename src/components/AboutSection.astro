@@ -23,14 +23,14 @@ const stats = [
 
     <div class='grid gap-16 lg:grid-cols-2'>
       <div class='flex flex-col gap-4'>
-        <p data-animate class='text-pretty leading-relaxed text-muted-foreground opacity-0' style='animation-delay: 0.2s'>
+        <p data-animate class='text-[16px] md:text-lg text-pretty leading-relaxed text-muted-foreground opacity-0' style='animation-delay: 0.2s'>
           Desde el inicio de mi formación en Ingeniería de Sistemas en la UAI, me he apasionado por crear interfaces que no solo funcionen bien, sino
           que inspiren.
         </p>
-        <p data-animate class='text-pretty leading-relaxed text-muted-foreground opacity-0' style='animation-delay: 0.3s'>
+        <p data-animate class='text-[16px] md:text-lg text-pretty leading-relaxed text-muted-foreground opacity-0' style='animation-delay: 0.3s'>
           Mi enfoque está en la mejora continua y la eficiencia en el desarrollo de productos digitales.
         </p>
-        <p data-animate class='text-pretty leading-relaxed text-muted-foreground opacity-0' style='animation-delay: 0.3s'>
+        <p data-animate class='text-[16px] md:text-lg text-pretty leading-relaxed text-muted-foreground opacity-0' style='animation-delay: 0.3s'>
           Cuento con un sólido background técnico fortalecido por bootcamps avanzados en React y Next.js.
         </p>
 
@@ -40,22 +40,22 @@ const stats = [
             stats.map((stat) => (
               <div class='rounded-xl border border-border bg-card/50 p-4 backdrop-blur-sm transition-colors duration-300 hover:border-primary/30'>
                 <div class='text-2xl font-bold text-primary'>{stat.value}</div>
-                <div class='mt-1 text-xs text-muted-foreground'>{stat.label}</div>
+                <div class='mt-1 text-sm md:text-[16px] text-muted-foreground'>{stat.label}</div>
               </div>
             ))
           }
         </div>
       </div>
 
-      {/* Skills */}
+      {/* Experience timeline */}
       <div data-animate class='opacity-0' style='animation-delay: 0.5s'>
-        <h3 class='mb-6 font-mono text-sm text-muted-foreground'>Stack tecnológico</h3>
+        <h3 class='mb-6 font-mono text-lg text-muted-foreground'>Experiencia</h3>
         <ExperienceTimeline experiencias={experiencias} />
       </div>
-      {/* Experience timeline */}
     </div>
+    {/* Skills */}
     <div class='mt-10 w-full'>
-      <h3 class='mb-6 font-mono text-sm text-muted-foreground'>Experiencia</h3>
+      <h3 class='mb-6 font-mono text-lg text-muted-foreground'>Stack tecnológico</h3>
       <TechStack client:only='react' stackTecnologico={stackTecnologico} />
     </div>
   </div>

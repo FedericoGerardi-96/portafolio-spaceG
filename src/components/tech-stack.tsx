@@ -155,7 +155,7 @@ export default function TechStack({ stackTecnologico }: TechStackProps) {
             }`}
           >
             {tab.icon}
-            <span className="hidden sm:inline">{tab.label}</span>
+            <span className="hidden sm:inline text-[16px]">{tab.label}</span>
           </button>
         ))}
       </div>

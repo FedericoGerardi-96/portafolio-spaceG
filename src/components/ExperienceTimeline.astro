@@ -18,22 +18,22 @@ const experiencias = Array.isArray(rawExperiencias)
         class="experience-item group relative flex items-start gap-4 py-5 text-left transition-all duration-300 first:pt-0 last:pb-0 w-full"
         data-index={index}
       >
-        <div class="relative z-10 mt-1.5 flex-shrink-0">
+        <div class="relative z-10 mt-1.5 shrink-0">
           <div class="node-dot relative h-[23px] w-[23px] rounded-full border-2 border-white/20 bg-background transition-all duration-300 group-hover:border-primary/60 group-hover:bg-primary/10">
             <div class="absolute inset-0 m-auto h-2 w-2 rounded-full bg-white/40 group-hover:bg-primary/60"></div>
           </div>
         </div>
 
-        <div class="flex-1 rounded-xl border border-transparent px-4 py-3.5 transition-all duration-300 group-hover:border-white/10 group-hover:bg-white/[0.03]">
+        <div class="flex-1 rounded-xl border border-transparent px-4 py-3.5 transition-all duration-300 group-hover:border-white/10 group-hover:bg-white/3">
           <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
-            <h4 class="text-sm font-semibold text-white/70 group-hover:text-white transition-colors">
+            <h4 class="text-[16px] md:text-[18px] font-semibold text-white/70 group-hover:text-white transition-colors">
               {exp.empresa}
             </h4>
-            <span class="font-mono text-xs text-primary/80">
+            <span class="font-mono text-sm text-primary/80">
               {exp.periodo}
             </span>
           </div>
-          <p class="mt-0.5 text-xs text-white/40 group-hover:text-white/60">
+          <p class="mt-0.5 text-[14px] md:text-[16px] text-white/40 group-hover:text-white/60">
             {exp.puesto}
           </p>
           <div class="mt-2 flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-widest text-primary/0 transition-all duration-300 group-hover:text-primary/70">
@@ -84,16 +84,16 @@ const experiencias = Array.isArray(rawExperiencias)
         </div>
 
         <div class="p-4 rounded-lg bg-white/5 border border-white/10">
-          <h3 class="text-xs font-mono uppercase text-white/40 mb-3 tracking-widest">Descripción</h3>
-          <p class="text-sm text-white/80 leading-relaxed">${data.descripcion || ''}</p>
+          <h3 class="text-[16px] md:text-lg font-mono uppercase text-white/40 mb-3 tracking-widest">Descripción</h3>
+          <p class="text-sm md:text-[16px] text-white/80 leading-relaxed">${data.descripcion || ''}</p>
         </div>
 
         ${data.logros && data.logros.length > 0 ? `
           <div>
-            <h3 class="text-xs font-mono uppercase text-white/40 mb-3 tracking-widest">Logros Clave</h3>
+            <h3 class="text-[16px] md:text-lg font-mono uppercase text-white/40 mb-3 tracking-widest">Logros Clave</h3>
             <ul class="space-y-3">
               ${data.logros.map(logro => `
-                <li class="flex gap-3 text-sm text-white/70">
+                <li class="flex gap-3 text-sm md:text-[16px] text-white/70">
                   <span class="h-1.5 w-1.5 rounded-full bg-primary mt-1.5 shrink-0"></span>
                   ${logro}
                 </li>
@@ -104,10 +104,10 @@ const experiencias = Array.isArray(rawExperiencias)
 
         ${data.tecnologias && data.tecnologias.length > 0 ? `
           <div>
-            <h3 class="text-xs font-mono uppercase text-white/40 mb-3 tracking-widest">Tecnologías</h3>
+            <h3 class="text-[16px] md:text-lg font-mono uppercase text-white/40 mb-3 tracking-widest">Tecnologías</h3>
             <div class="flex flex-wrap gap-2">
               ${data.tecnologias.map(tech => `
-                <span class="px-2 py-1 text-[10px] font-mono border border-primary/30 bg-primary/10 text-primary rounded">
+                <span class="px-2 py-1 md:text-[16px] text-[14px] font-mono border border-primary/30 bg-primary/10 text-primary rounded">
                   ${tech}
                 </span>
               `).join('')}
